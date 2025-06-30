@@ -44,3 +44,12 @@ jobs:
         run: |
           docker build -t ${{ secrets.USERNAME }}/devops:${{ github.sha }} .
           docker push ${{ secrets.USERNAME }}/devops:${{ github.sha }} 
+
+
+      - name: Deploy to Azure Web app
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'ObjDevAsish'
+          publish-profile: ${{ secrets.OBJ_DEV_ASISH_PUBLISH }}
+          images: '${{ secrets.USERNAME }}/devops:${{ github.sha }}'
+ 
